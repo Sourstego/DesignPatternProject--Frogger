@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour {
   [Header("Game parameters")]
   [SerializeField] private float moveDuration = 0.2f;
   [SerializeField] private int spawnDistance = 20;
+  [Header("UI")]
+  [SerializeField] private GameObject gameOverPanel;
 
   enum GameState {
     Ready,
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour {
   private GameState gameState;
   private Vector2Int characterPos;
   private int spawnLocation;
+  private bool stopSpawning = false;
+  private Coroutine deathCoroutine = null;
   private List<(float terrainHeight, HashSet<int> locations, GameObject obj)> obstacles = new();
   private int score = 0;
 
@@ -65,6 +69,14 @@ public class GameManager : MonoBehaviour {
       return;
     }
     gameState = GameState.Ready;
+    // Re-enable spawning/movement when starting a new level
+    stopSpawning = false;
+    deathCoroutine = null;
+
+    // Hide Game Over UI when starting
+    if (gameOverPanel != null) {
+      gameOverPanel.SetActive(false);
+    }
 
     // Reset character position
     characterPos = new Vector2Int(0, -2);
@@ -98,6 +110,7 @@ public class GameManager : MonoBehaviour {
   }
 
   private void SpawnObstacle() {
+    if (stopSpawning) return;
     if (sandPrefab == null || roadPrefab == null || terrainHolder == null) {
       Debug.LogError("Cannot spawn obstacle: Prefabs or terrain holder not assigned!");
       return;
@@ -255,5 +268,41 @@ public class GameManager : MonoBehaviour {
   public void PlayerCollision() {
     // When we collide, we'll simply update the game state.
     gameState = GameState.Dead;
+    if (deathCoroutine == null) {
+      deathCoroutine = StartCoroutine(OnPlayerDeath());
+    }
+  }
+
+  private IEnumerator OnPlayerDeath() {
+    // Wait 4 seconds, then stop further spawning and halt current vehicle movement.
+    yield return new WaitForSeconds(4f);
+
+    stopSpawning = true;
+
+    // Find all road controllers and tell them to stop moving their vehicles.
+    Road[] roads = FindObjectsOfType<Road>();
+    foreach (Road r in roads) {
+      r.SetMoving(false);
+    }
+
+    // Show Game Over UI after vehicles have been halted
+    ShowGameOverPanel();
+
+    Debug.Log("Player died: stopped spawning and halted vehicles.");
+  }
+
+  // UI helpers
+  private void ShowGameOverPanel() {
+    if (gameOverPanel != null) gameOverPanel.SetActive(true);
+  }
+
+  private void HideGameOverPanel() {
+    if (gameOverPanel != null) gameOverPanel.SetActive(false);
+  }
+
+  // Public method suitable for UI Button onClick
+  public void RestartLevel() {
+    HideGameOverPanel();
+    NewLevel();
   }
 }

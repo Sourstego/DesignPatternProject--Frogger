@@ -7,6 +7,7 @@ public class Road : MonoBehaviour {
   private int direction = 1;
   private float speed = 1f;
   private List<Rigidbody> spawnedVehicles = new();
+  private bool moving = true;
 
   public HashSet<int> Init(float z) {
     if (vehicles == null || vehicles.Count == 0) {
@@ -16,6 +17,9 @@ public class Road : MonoBehaviour {
 
     // Place the obstacle at the location provided.
     transform.position = new Vector3(0, 0, z);
+
+    // Ensure this road starts enabled for movement
+    moving = true;
 
     // Choose which direction the vehicles go, -1 or +1.
     direction = 2 * Random.Range(0, 2) - 1;
@@ -53,6 +57,8 @@ public class Road : MonoBehaviour {
   }
 
   private void FixedUpdate() {
+    if (!moving) return;
+
     // Move vehicles
     foreach (Rigidbody vehicle in spawnedVehicles) {
       // Move along the road, us the RB movement so collisions are handled correctly.
@@ -69,5 +75,9 @@ public class Road : MonoBehaviour {
         vehicle.position = pos;
       }
     }
+  }
+
+  public void SetMoving(bool enabled) {
+    moving = enabled;
   }
 }
