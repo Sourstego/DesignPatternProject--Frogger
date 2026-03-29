@@ -1,23 +1,23 @@
 # DesignPatternProject- Frogger
 Simple Frogger Game in Unity
 
-Game title 
-Short description
-How to run the prototype
-Controls
-GitHub repository link
-Demo video link
-
-# BlockFrog
-
-Welcome to BlockFrog, the all new super-ultimate extraordinarily fun game about a blocky ass frog in a blocky ass world.
+## Game Title
+**Desert Penguin**
 Basically Crossy Road if it was good. (Jk, pls don't sue us).
 
-**Controls:**
-Standard WASD
+## Short Description
+Welcome to Desert Penguin, a fast-paced arcade-style game where a determined penguin must cross a dangerous desert. The player dodges moving cars, trucks, and cacti while trying to survive and keep moving forward. The farther the penguin gets, the more difficult the game becomes, making timing and careful movement more important as you progress.
 
-**GitHub Repo:**
-Well, you're here so... just look in the URL bar. If for some strange reason it's not there, here:
+## How to Run the Prototype
+1. Open the project in Unity.
+2. Open the main scene.
+3. Press **Play** in the Unity Editor.
+
+## Controls
+**Arrow Keys** or **WASD** to move the penguin.
+
+## GitHub Repository Link
 https://github.com/Sourstego/DesignPatternProject--Frogger
 
-**Demo Vid (Ft. Snoop Dogg):**
+## Demo Video Link
+Add demo video link here
