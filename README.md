@@ -15,6 +15,7 @@ Welcome to Desert Penguin, a fast-paced arcade-style game where a determined pen
 
 ## Controls
 **Arrow Keys** to move the penguin.
+**Space Key** to restart
 
 ## GitHub Repository Link
 https://github.com/Sourstego/DesignPatternProject--Frogger
