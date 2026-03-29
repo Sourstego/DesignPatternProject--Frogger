@@ -14,7 +14,7 @@ Welcome to Desert Penguin, a fast-paced arcade-style game where a determined pen
 3. Press **Play** in the Unity Editor.
 
 ## Controls
-**Arrow Keys** or **WASD** to move the penguin.
+**Arrow Keys** to move the penguin.
 
 ## GitHub Repository Link
 https://github.com/Sourstego/DesignPatternProject--Frogger
